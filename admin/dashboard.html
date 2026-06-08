@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8KP47FH1L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M8KP47FH1L');
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Energy Talks</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        :root{--bg:#0d1117;--card:#21262d;--surface:#161b22;--accent:#f7931e;--accent2:#00a8e8;--green:#10b981;--red:#ef4444;--text:#fff;--muted:#8b949e;--gradient:linear-gradient(135deg,#f7931e 0%,#ff6b35 50%,#00a8e8 100%)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
+        .header{background:var(--gradient);color:#0d1117;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+        .header h1{font-family:'Playfair Display',serif;font-size:1.4rem}
+        .header-actions{display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap}
+        .header-actions a,.header-actions span{color:#0d1117;text-decoration:none;font-weight:600;padding:0.4rem 0.8rem;border-radius:6px;font-size:0.85rem}
+        .header-actions a{background:rgba(0,0,0,0.1)}
+        .header-actions a:hover{background:rgba(0,0,0,0.2)}
+        .role-badge{background:#648ea0;color:var(--accent);font-size:0.7rem;padding:0.2rem 0.5rem;border-radius:4px;text-transform:uppercase}
+        .container{display:flex;min-height:calc(100vh - 65px)}
+        .sidebar{width:250px;background:var(--surface);padding:1rem 0}
+        .sidebar-title{padding:0.5rem 1rem;font-size:0.7rem;text-transform:uppercase;color:var(--muted);background:rgba(247,147,30,0.1);border-left:3px solid var(--accent);margin-top:0.5rem}
+        .sidebar-link{display:flex;justify-content:space-between;padding:0.7rem 1rem;color:var(--muted);cursor:pointer;font-size:0.9rem}
+        .sidebar-link:hover{background:rgba(255,255,255,0.05);color:var(--accent)}
+        .sidebar-link.active{background:rgba(247,147,30,0.1);color:var(--accent);border-left:3px solid var(--accent)}
+        .badge{padding:0.15rem 0.5rem;border-radius:10px;font-size:0.7rem;font-weight:700}
+        .badge-count{background:var(--accent);color:#0d1117}
+        .main{flex:1;padding:1.5rem;overflow-y:auto}
+        .section{display:none}
+        .section.active{display:block}
+        .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+        .section-title{font-family:'Playfair Display',serif;font-size:1.5rem}
+        .btn{padding:0.6rem 1.2rem;border-radius:8px;font-weight:600;cursor:pointer;border:none;font-size:0.85rem}
+        .btn-primary{background:var(--gradient);color:#0d1117}
+        .btn-secondary{background:var(--card);color:var(--text);border:1px solid rgba(255,255,255,0.1)}
+        .btn-sm{padding:0.35rem 0.7rem;font-size:0.75rem}
+        .filters{display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap}
+        .filter-input,.filter-select{padding:0.6rem;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:var(--card);color:var(--text);font-size:0.9rem}
+        .filter-input{width:200px}
+        .table-wrap{background:var(--card);border-radius:10px;overflow-x:auto}
+        table{width:100%;border-collapse:collapse;min-width:600px}
+        th{padding:0.8rem;text-align:left;font-size:0.75rem;text-transform:uppercase;color:var(--accent);background:var(--surface)}
+        td{padding:0.8rem;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem}
+        .status{padding:0.25rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;text-transform:uppercase}
+        .status-published{background:rgba(16,185,129,0.2);color:var(--green)}
+        .status-draft{background:rgba(139,148,158,0.2);color:var(--muted)}
+        .status-active{background:rgba(16,185,129,0.2);color:var(--green)}
+        .status-inactive{background:rgba(139,148,158,0.2);color:var(--muted)}
+        .status-admin{background:rgba(239,68,68,0.2);color:var(--red)}
+        .status-editor{background:rgba(0,168,232,0.2);color:var(--accent2)}
+        .cat{background:rgba(247,147,30,0.2);color:var(--accent);padding:0.25rem 0.5rem;border-radius:4px;font-size:0.7rem}
+        .action-btn{padding:0.3rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;border:none;cursor:pointer;margin-right:0.2rem}
+        .action-btn.view{background:rgba(0,168,232,0.2);color:var(--accent2)}
+        .action-btn.edit{background:rgba(247,147,30,0.2);color:var(--accent)}
+        .action-btn.del{background:rgba(239,68,68,0.2);color:var(--red)}
+        .empty{text-align:center;padding:3rem;color:var(--muted)}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(13, 13, 13, 0.85);z-index:1000;overflow-y:auto}
+        .modal.active{display:flex;justify-content:center;padding:2rem}
+        .modal-box{background:var(--card);border-radius:12px;width:100%;max-width:800px;margin:auto}
+        .modal-header{padding:1rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center}
+        .modal-header h2{font-family:'Playfair Display',serif;font-size:1.2rem}
+        .modal-close{background:none;border:none;font-size:1.5rem;color:var(--muted);cursor:pointer}
+        .modal-body{padding:1.5rem;max-height:60vh;overflow-y:auto}
+        .modal-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:flex-end;gap:0.5rem}
+        .form-group{margin-bottom:1rem}
+        .form-label{display:block;margin-bottom:0.3rem;font-weight:600;font-size:0.85rem}
+        .form-input,.form-select,.form-textarea{width:100%;padding:0.7rem;border:1px solid rgba(255,255,255,0.1);border-radius:6px;background:var(--surface);color:var(--text);font-size:0.9rem}
+        .form-textarea{min-height:80px;resize:vertical}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+        .form-check{display:flex;align-items:center;gap:0.5rem;font-size:0.9rem}
+        .form-check input{width:16px;height:16px;accent-color:var(--accent)}
+        .form-section{background:rgba(247,147,30,0.1);padding:0.5rem 1rem;border-radius:4px;margin:1rem 0 0.5rem;border-left:3px solid var(--accent);font-weight:600;font-size:0.85rem;color:var(--accent)}
+        .form-hint{font-size:0.75rem;color:var(--muted)}
+        #editor{height:250px;background:var(--surface)}
+        .ql-toolbar.ql-snow{border:1px solid rgba(255,255,255,0.1)!important;background:var(--card)}
+        .ql-container.ql-snow{border:1px solid rgba(255,255,255,0.1)!important;border-top:none!important}
+        .ql-editor{color:var(--text);min-height:200px}
+        .upload-box{border:2px dashed rgba(255,255,255,0.2);border-radius:8px;padding:1.5rem;text-align:center;cursor:pointer;background:var(--surface)}
+        .upload-box:hover{border-color:var(--accent)}
+        .preview{margin-top:0.5rem;display:none}
+        .preview.show{display:block}
+        .preview img{max-width:100%;max-height:120px;border-radius:6px}
+        .perms{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem}
+        .perm{display:flex;align-items:center;gap:0.4rem;padding:0.4rem;background:var(--surface);border-radius:4px;font-size:0.8rem}
+        .alert{padding:0.6rem;border-radius:6px;margin-bottom:1rem;font-size:0.85rem}
+        .alert-error{background:rgba(239,68,68,0.1);color:var(--red)}
+        .alert-success{background:rgba(16,185,129,0.1);color:var(--green)}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.5rem}
+        .stat-card{background:var(--card);padding:1rem;border-radius:8px}
+        .stat-card h4{font-size:0.75rem;color:var(--muted);margin-bottom:0.3rem}
+        .stat-card .val{font-size:1.5rem;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent}
+        .activity{padding:0.6rem;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:0.6rem}
+        .activity-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+        .activity-icon.add{background:rgba(16,185,129,0.2)}
+        .activity-icon.edit{background:rgba(247,147,30,0.2)}
+        .activity-icon.del{background:rgba(239,68,68,0.2)}
+        .activity-icon.login{background:rgba(0,168,232,0.2)}
+        .activity-text{font-size:0.85rem}
+        .activity-text strong{color:var(--accent)}
+        .activity-time{font-size:0.7rem;color:var(--muted)}
+        .avatar{width:28px;height:28px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-weight:700;color:#0d1117;font-size:0.8rem}
+        .mobile-menu-toggle{display:none;background:var(--card);border:1px solid rgba(255,255,255,0.1);color:var(--text);padding:0.5rem 1rem;border-radius:6px;cursor:pointer;font-size:0.9rem;margin-bottom:1rem}
+        .mobile-menu-toggle:hover{background:var(--surface);border-color:var(--accent)}
+        @media(max-width:768px){
+            .sidebar{position:fixed;top:65px;left:-260px;width:250px;height:calc(100vh - 65px);z-index:100;transition:left 0.3s ease;background:var(--surface)}
+            .sidebar.open{left:0;box-shadow:5px 0 20px rgba(0,0,0,0.5)}
+            .mobile-menu-toggle{display:block}
+            .form-row{grid-template-columns:1fr}
+            .perms{grid-template-columns:1fr 1fr}
+            .header{padding:0.75rem 1rem}
+            .header h1{font-size:1.1rem}
+            .header-actions{gap:0.3rem}
+            .header-actions a,.header-actions span{padding:0.3rem 0.5rem;font-size:0.75rem}
+            .main{padding:1rem}
+            .section-header{flex-direction:column;align-items:flex-start}
+            .filters{flex-direction:column}
+            .filter-input{width:100%}
+            .stats{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:400px){
+            .stats{grid-template-columns:1fr}
+            .header-actions a:not(:last-child){display:none}
+            .role-badge{display:none}
+        }
+        .sidebar-overlay{display:none;position:fixed;top:65px;left:0;width:100%;height:calc(100vh - 65px);background:rgba(0,0,0,0.5);z-index:99}
+        .sidebar-overlay.open{display:block}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+        .ga-link{display:flex;align-items:center;gap:0.75rem;padding:1rem;background:var(--surface);border-radius:8px;text-decoration:none;color:var(--text);transition:all 0.3s}
+        .ga-link:hover{background:rgba(247,147,30,0.1);border-left:3px solid var(--accent)}
+        .ga-link-icon{font-size:1.5rem}
+        .ga-link-title{display:block;font-size:0.9rem}
+        .ga-link-desc{color:var(--muted)}
+        .ga-section{padding:1.5rem}
+        .ga-section-title{margin-bottom:1rem;color:var(--accent);font-size:1rem}
+        .ga-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+        .ga-embed{background:var(--surface);border-radius:8px;min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
+        .ga-embed-inner{text-align:center;max-width:500px}
+        .ga-embed-icon{font-size:3rem;margin-bottom:1rem}
+        .ga-embed-actions{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+        .ga-embed-tip{margin-top:1.5rem;padding:1rem;background:rgba(247,147,30,0.1);border-radius:8px;border-left:3px solid var(--accent)}
+        .ga-embed-tip h4{font-size:0.9rem;margin-bottom:0.5rem;color:var(--accent)}
+        .ga-embed-tip p{font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem}
+        .ga-embed-desc{color:var(--muted);margin-bottom:1.5rem;font-size:0.9rem}
+        .ga-stats{margin-bottom:1.5rem}
+        .ga-live{position:absolute;top:0.5rem;right:0.5rem;width:8px;height:8px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
+        .stat-card-rel{position:relative}
+        .padded{padding:1rem}
+        .padded-mt{padding:1.5rem;margin-top:1rem}
+        .mb-half{margin-bottom:0.5rem}
+        .mb-input{margin-bottom:0.5rem}
+        .btn-link{text-decoration:none}
+        .hidden-input{display:none}
+        .mt-half{margin-top:0.5rem}
+        .mt-sm{margin-top:0.3rem}
+        .modal-box-sm{max-width:500px}
+        .modal-box-xs{max-width:400px}
+        .user-cell{display:flex;align-items:center;gap:0.5rem}
+        .iframe-embed{border-radius:8px}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Energy Talks Admin</h1>
+        <div class="header-actions">
+            <span id="userName">Admin</span>
+            <span class="role-badge" id="userRole">admin</span>
+            <a href="../index.html" target="_blank" rel="noopener">Site</a>
+            <a href="#" onclick="openPwModal();return false">Password</a>
+            <a href="login.html" onclick="doLogout()">Logout</a>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleAdminSidebar()"></div>
+    <div class="container">
+        <div class="sidebar" id="adminSidebar">
+            <div class="sidebar-title">Content</div>
+            <div class="sidebar-link active" data-sec="blogs">📝 Blogs <span class="badge badge-count" id="blogCount">0</span></div>
+            <div class="sidebar-link" data-sec="subs">👥 Subscribers <span class="badge badge-count" id="subCount">0</span></div>
+            <div class="sidebar-title">Analytics</div>
+            <div class="sidebar-link" data-sec="stats">📊 Dashboard</div>
+            <div class="sidebar-link" data-sec="analytics">📈 Google Analytics</div>
+            <div class="sidebar-link" data-sec="logs">📋 Activity</div>
+            <div class="sidebar-title" id="adminTitle">Admin</div>
+            <div class="sidebar-link" data-sec="users" id="usersNav">👤 Users <span class="badge badge-count" id="userCount">0</span></div>
+        </div>
+        <div class="main">
+            <button type="button" class="mobile-menu-toggle" onclick="toggleAdminSidebar()">☰ Menu</button>
+            <!-- Blogs -->
+            <div class="section active" id="sec-blogs">
+                <div class="section-header">
+                    <h2 class="section-title">Blogs</h2>
+                    <button type="button" class="btn btn-primary" id="addBlogBtn" onclick="openBlogModal()">+ Add Blog</button>
+                </div>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search..." id="blogSearch" oninput="renderBlogs()">
+                    <select class="filter-select" id="blogStatus" aria-label="Filter by status" onchange="renderBlogs()"><option value="all">All Status</option><option value="published">Published</option><option value="draft">Draft</option></select>
+                    <select class="filter-select" id="blogCat" aria-label="Filter by category" onchange="renderBlogs()"><option value="all">All Categories</option></select>
+                </div>
+                <div class="table-wrap"><table><thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Author</th><th>Views</th><th>Date</th><th>Actions</th></tr></thead><tbody id="blogTable"></tbody></table></div>
+            </div>
+            <!-- Stats -->
+            <div class="section" id="sec-stats">
+                <div class="section-header"><h2 class="section-title">Dashboard</h2></div>
+                <div class="stats">
+                    <div class="stat-card"><h4>Total Views</h4><div class="val" id="statViews">0</div></div>
+                    <div class="stat-card"><h4>Published</h4><div class="val" id="statPub">0</div></div>
+                    <div class="stat-card"><h4>Drafts</h4><div class="val" id="statDraft">0</div></div>
+                    <div class="stat-card"><h4>Subscribers</h4><div class="val" id="statSubs">0</div></div>
+                    <div class="stat-card"><h4>Users</h4><div class="val" id="statUsers">0</div></div>
+                </div>
+                <div class="table-wrap padded"><h3 class="ga-section-title mb-half">Recent Activity</h3><div id="recentAct"></div></div>
+            </div>
+            <!-- Google Analytics -->
+            <div class="section" id="sec-analytics">
+                <div class="section-header">
+                    <h2 class="section-title">Google Analytics</h2>
+                    <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/intelligenthome" target="_blank" rel="noopener" class="btn btn-primary">Open Full Dashboard</a>
+                </div>
+                <div class="stats ga-stats">
+                    <div class="stat-card stat-card-rel">
+                        <div class="ga-live"></div>
+                        <h4>Live Visitors</h4>
+                        <div class="val" id="gaLiveVisitors">--</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Today's Views</h4>
+                        <div class="val" id="gaTodayViews">--</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>This Week</h4>
+                        <div class="val" id="gaWeekViews">--</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>This Month</h4>
+                        <div class="val" id="gaMonthViews">--</div>
+                    </div>
+                </div>
+                <div class="table-wrap ga-section">
+                    <h3 class="ga-section-title">Real-Time Analytics</h3>
+                    <div id="gaEmbed" class="ga-embed">
+                        <div class="ga-embed-inner">
+                            <div class="ga-embed-icon">📊</div>
+                            <h4 class="mb-half">Google Analytics Dashboard</h4>
+                            <p class="ga-embed-desc">View real-time visitor data, traffic sources, user behavior, and more from your Google Analytics account.</p>
+                            <div class="ga-embed-actions">
+                                <a href="https://analytics.google.com/analytics/web/#/report-home/a000000000wXXXXXXXXXp000000000" target="_blank" rel="noopener" class="btn btn-primary btn-link">
+                                    Open Analytics
+                                </a>
+                                <a href="https://lookerstudio.google.com/" target="_blank" rel="noopener" class="btn btn-secondary btn-link">
+                                    Create Looker Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ga-embed-tip">
+                        <h4>Embed Custom Reports</h4>
+                        <p>To display live analytics charts here, create a Looker Studio report connected to your GA4 property (G-M8KP47FH1L), then embed it below:</p>
+                        <input type="text" class="form-input mb-input" id="lookerEmbedUrl" placeholder="Paste Looker Studio embed URL here...">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="saveLookerEmbed()">Save & Load Report</button>
+                    </div>
+                </div>
+                <div class="table-wrap padded-mt">
+                    <h3 class="ga-section-title">Quick Links</h3>
+                    <div class="ga-grid">
+                        <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/reportinghub" target="_blank" rel="noopener" class="ga-link">
+                            <span class="ga-link-icon">📈</span>
+                            <div><strong class="ga-link-title">Reports</strong><small class="ga-link-desc">View all reports</small></div>
+                        </a>
+                        <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/dashboard?params=_u..nav%3Dmaui" target="_blank" rel="noopener" class="ga-link">
+                            <span class="ga-link-icon">👥</span>
+                            <div><strong class="ga-link-title">Realtime</strong><small class="ga-link-desc">Live visitors now</small></div>
+                        </a>
+                        <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/explorer?params=_u..nav%3Dmaui%26_r.explorerCard..selmet%3D%5B%22activeUsers%22%5D%26_r.explorerCard..seldim%3D%5B%22country%22%5D" target="_blank" rel="noopener" class="ga-link">
+                            <span class="ga-link-icon">🌍</span>
+                            <div><strong class="ga-link-title">Geography</strong><small class="ga-link-desc">Visitors by country</small></div>
+                        </a>
+                        <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/explorer?params=_u..nav%3Dmaui%26_r.explorerCard..selmet%3D%5B%22sessions%22%5D%26_r.explorerCard..seldim%3D%5B%22sessionSource%22%5D" target="_blank" rel="noopener" class="ga-link">
+                            <span class="ga-link-icon">🔗</span>
+                            <div><strong class="ga-link-title">Traffic Sources</strong><small class="ga-link-desc">Where users come from</small></div>
+                        </a>
+                        <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/explorer?params=_u..nav%3Dmaui%26_r.explorerCard..selmet%3D%5B%22screenPageViews%22%5D%26_r.explorerCard..seldim%3D%5B%22pagePath%22%5D" target="_blank" rel="noopener" class="ga-link">
+                            <span class="ga-link-icon">📄</span>
+                            <div><strong class="ga-link-title">Top Pages</strong><small class="ga-link-desc">Most viewed content</small></div>
+                        </a>
+                        <a href="https://analytics.google.com/analytics/web/#/p/G-M8KP47FH1L/reports/explorer?params=_u..nav%3Dmaui%26_r.explorerCard..selmet%3D%5B%22sessions%22%5D%26_r.explorerCard..seldim%3D%5B%22deviceCategory%22%5D" target="_blank" rel="noopener" class="ga-link">
+                            <span class="ga-link-icon">📱</span>
+                            <div><strong class="ga-link-title">Devices</strong><small class="ga-link-desc">Mobile vs Desktop</small></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Logs -->
+            <div class="section" id="sec-logs">
+                <div class="section-header"><h2 class="section-title">Activity Log</h2>
+                    <div><select class="filter-select" id="logFilter" aria-label="Filter by type" onchange="renderLogs()"><option value="all">All</option><option value="blog">Blog</option><option value="user">User</option><option value="login">Login</option></select>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="exportLogs()">Export</button></div>
+                </div>
+                <div class="table-wrap" id="logList"></div>
+            </div>
+            <!-- Subscribers -->
+            <div class="section" id="sec-subs">
+                <div class="section-header"><h2 class="section-title">Subscribers</h2><button type="button" class="btn btn-primary" onclick="exportSubs()">Export CSV</button></div>
+                <div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Date</th><th>Actions</th></tr></thead><tbody id="subTable"></tbody></table></div>
+            </div>
+            <!-- Users -->
+            <div class="section" id="sec-users">
+                <div class="section-header"><h2 class="section-title">Users</h2><button type="button" class="btn btn-primary" onclick="openUserModal()">+ Add User</button></div>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search..." id="userSearch" oninput="renderUsers()">
+                    <select class="filter-select" id="userRole2" aria-label="Filter by role" onchange="renderUsers()"><option value="all">All Roles</option><option value="admin">Admin</option><option value="editor">Editor</option></select>
+                </div>
+                <div class="table-wrap"><table><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Posts</th><th>Actions</th></tr></thead><tbody id="userTable"></tbody></table></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div class="modal" id="blogModal">
+        <div class="modal-box">
+            <div class="modal-header"><h2 id="blogModalTitle">Add Blog</h2><button type="button" class="modal-close" onclick="closeBlogModal()">&times;</button></div>
+            <div class="modal-body">
+                <input type="hidden" id="blogId">
+                <div class="form-section">Basic Info</div>
+                <div class="form-group"><label class="form-label" for="blogTitle">Title *</label><input type="text" class="form-input" id="blogTitle"></div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label" for="blogCategory">Category *</label><select class="form-select" id="blogCategory"><option value="">Select</option><option>Oil & Gas</option><option>Petrochemicals</option><option>Power & Utilities</option><option>Renewables</option><option>Market Analysis</option><option>Technology</option><option>ESG</option><option>Infrastructure</option><option>Hydrogen</option><option>LNG</option><option>Policy</option><option>Nuclear</option></select></div>
+                    <div class="form-group"><label class="form-label" for="blogSlug">URL Slug</label><input type="text" class="form-input" id="blogSlug" placeholder="auto-generated"></div>
+                </div>
+                <div class="form-group"><label class="form-label" for="blogExcerpt">Excerpt *</label><textarea class="form-textarea" id="blogExcerpt"></textarea></div>
+                <div class="form-section">Content</div>
+                <div class="form-group"><label class="form-label" for="editor">Content *</label><div id="editor"></div></div>
+                <div class="form-group">
+                    <label class="form-label" for="imgInput">Featured Image</label>
+                    <div class="upload-box" id="uploadBox" onclick="document.getElementById('imgInput').click()">📤 Click to upload<input type="file" id="imgInput" accept="image/*" class="hidden-input" onchange="handleImg(this)"></div>
+                    <input type="text" class="form-input mt-half" id="blogImgUrl" placeholder="Or paste image URL">
+                    <div class="preview" id="imgPreview"><img id="previewImg" src="" alt="Image preview"><button type="button" class="btn btn-secondary btn-sm mt-sm" onclick="clearImg()">Remove</button></div>
+                </div>
+                <div class="form-group"><label class="form-label" for="blogTags">Tags</label><input type="text" class="form-input" id="blogTags" placeholder="tag1, tag2"><div class="form-hint">Comma-separated</div></div>
+                <div class="form-section">Publishing</div>
+                <div class="form-row">
+                    <label class="form-check"><input type="checkbox" id="blogPub" checked> Published</label>
+                    <label class="form-check"><input type="checkbox" id="blogFeat"> Featured</label>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label" for="blogDate">Date</label><input type="date" class="form-input" id="blogDate"></div>
+                    <div class="form-group"><label class="form-label" for="blogRead">Read Time (min)</label><input type="number" class="form-input" id="blogRead" value="5" min="1"></div>
+                </div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeBlogModal()">Cancel</button><button type="button" class="btn btn-primary" onclick="saveBlog()">Save</button></div>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-box modal-box-sm">
+            <div class="modal-header"><h2 id="userModalTitle">Add User</h2><button type="button" class="modal-close" onclick="closeUserModal()">&times;</button></div>
+            <div class="modal-body">
+                <div id="userAlert"></div>
+                <input type="hidden" id="userId">
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label" for="userUsername">Username *</label><input type="text" class="form-input" id="userUsername"></div>
+                    <div class="form-group"><label class="form-label" for="userEmail">Email *</label><input type="email" class="form-input" id="userEmail"></div>
+                </div>
+                <div class="form-group"><label class="form-label" for="userFullname">Full Name</label><input type="text" class="form-input" id="userFullname"></div>
+                <div class="form-group"><label class="form-label" for="userPassword">Password</label><input type="password" class="form-input" id="userPassword" placeholder="Min 8 chars"></div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label" for="userRoleSelect">Role</label><select class="form-select" id="userRoleSelect"><option value="editor">Editor</option><option value="admin">Admin</option></select></div>
+                    <div class="form-group"><label class="form-label" for="userStatus">Status</label><select class="form-select" id="userStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+                </div>
+                <div class="form-section">Permissions</div>
+                <div class="perms">
+                    <label class="perm"><input type="checkbox" id="permCreate" checked> Create</label>
+                    <label class="perm"><input type="checkbox" id="permEdit" checked> Edit Own</label>
+                    <label class="perm"><input type="checkbox" id="permEditAll"> Edit All</label>
+                    <label class="perm"><input type="checkbox" id="permDelete"> Delete</label>
+                    <label class="perm"><input type="checkbox" id="permPublish" checked> Publish</label>
+                    <label class="perm"><input type="checkbox" id="permSubs"> Subscribers</label>
+                </div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closeUserModal()">Cancel</button><button type="button" class="btn btn-primary" onclick="saveUser()">Save</button></div>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="modal" id="pwModal">
+        <div class="modal-box modal-box-xs">
+            <div class="modal-header"><h2>Change Password</h2><button type="button" class="modal-close" onclick="closePwModal()">&times;</button></div>
+            <div class="modal-body">
+                <div id="pwAlert"></div>
+                <div class="form-group"><label class="form-label" for="pwCurrent">Current Password</label><input type="password" class="form-input" id="pwCurrent"></div>
+                <div class="form-group"><label class="form-label" for="pwNew">New Password</label><input type="password" class="form-input" id="pwNew"></div>
+                <div class="form-group"><label class="form-label" for="pwConfirm">Confirm</label><input type="password" class="form-input" id="pwConfirm"></div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" onclick="closePwModal()">Cancel</button><button type="button" class="btn btn-primary" onclick="savePw()">Save</button></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+    // API base
+    const API = '../api/';
+    let me = null;
+    let blogs = [];
+    let users = [];
+    let subs = [];
+    let logs = [];
+    let imgData = null;
+
+    // Helper: API call
+    async function api(endpoint, options = {}) {
+        const res = await fetch(API + endpoint, {
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', ...options.headers },
+            ...options
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'API error');
+        return data;
+    }
+
+    // Auth check
+    (async function checkAuth() {
+        try {
+            const data = await api('auth.php?action=me');
+            me = data.user;
+            document.getElementById('userName').textContent = me.fullName || me.username;
+            document.getElementById('userRole').textContent = me.role;
+            if (me.role !== 'admin') { document.getElementById('adminTitle').style.display = 'none'; document.getElementById('usersNav').style.display = 'none'; }
+            if (!(me.permissions?.create) && me.role !== 'admin') document.getElementById('addBlogBtn').style.display = 'none';
+            renderBlogs();
+        } catch (e) {
+            location.href = 'login.html';
+        }
+    })();
+
+    // Quill
+    const quill = new Quill('#editor', {theme:'snow',modules:{toolbar:[[{header:[1,2,3,false]},],['bold','italic','underline'],[{list:'ordered'},{list:'bullet'}],[{align:[]}],['link','image'],['clean']]},placeholder:'Write content...'});
+
+    // Navigation
+    document.querySelectorAll('.sidebar-link').forEach(el => {
+        el.addEventListener('click', function() {
+            const sec = this.dataset.sec;
+            if (sec === 'users' && me.role !== 'admin') { alert('Admin only'); return; }
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('sec-' + sec).classList.add('active');
+            if (sec === 'blogs') renderBlogs();
+            if (sec === 'stats') renderStats();
+            if (sec === 'logs') renderLogs();
+            if (sec === 'subs') renderSubs();
+            if (sec === 'users') renderUsers();
+        });
+    });
+
+    // Slug
+    function makeSlug(t) { return t.toLowerCase().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').trim(); }
+    document.getElementById('blogTitle').addEventListener('input', function() {
+        const s = document.getElementById('blogSlug');
+        if (!s.dataset.manual) s.value = makeSlug(this.value);
+    });
+    document.getElementById('blogSlug').addEventListener('input', function() { this.dataset.manual = this.value ? '1' : ''; });
+
+    // Image upload
+    async function handleImg(inp) {
+        const f = inp.files[0];
+        if (!f || !f.type.startsWith('image/') || f.size > 10*1024*1024) { alert('Image max 10MB'); return; }
+        // Upload to server
+        const formData = new FormData();
+        formData.append('image', f);
+        try {
+            const res = await fetch(API + 'upload.php', { method: 'POST', body: formData, credentials: 'same-origin' });
+            const data = await res.json();
+            if (data.url) {
+                imgData = data.url;
+                document.getElementById('previewImg').src = data.url;
+                document.getElementById('imgPreview').classList.add('show');
+                document.getElementById('uploadBox').style.display = 'none';
+            } else { alert(data.error || 'Upload failed'); }
+        } catch (e) { alert('Upload failed'); }
+    }
+    function clearImg() { imgData = null; document.getElementById('blogImgUrl').value = ''; document.getElementById('imgPreview').classList.remove('show'); document.getElementById('uploadBox').style.display = 'block'; document.getElementById('imgInput').value = ''; }
+
+    // Permissions
+    function canEdit(b) { return me.role === 'admin' || (me.permissions?.editAll) || b.authorId == me.id; }
+    function canDel(b) { return me.role === 'admin' || ((me.permissions?.delete) && ((me.permissions?.editAll) || b.authorId == me.id)); }
+
+    // Render blogs
+    async function renderBlogs() {
+        try {
+            const search = document.getElementById('blogSearch').value;
+            const status = document.getElementById('blogStatus').value;
+            const cat = document.getElementById('blogCat').value;
+            let url = 'posts.php?';
+            if (search) url += 'search=' + encodeURIComponent(search) + '&';
+            if (status !== 'all') url += 'status=' + status + '&';
+            if (cat !== 'all') url += 'category=' + encodeURIComponent(cat) + '&';
+            const data = await api(url);
+            blogs = data.posts || [];
+        } catch (e) { blogs = []; }
+
+        // Update categories
+        const cats = [...new Set(blogs.map(b => b.category))].sort();
+        const catSel = document.getElementById('blogCat');
+        const curCat = catSel.value;
+        catSel.innerHTML = '<option value="all">All Categories</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+        catSel.value = curCat;
+
+        const tbody = document.getElementById('blogTable');
+        if (!blogs.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty">No blogs found</div></td></tr>'; document.getElementById('blogCount').textContent = '0'; return; }
+
+        tbody.innerHTML = blogs.map((b, i) => {
+            return `<tr>
+                <td>${b.title} ${b.featured ? '⭐' : ''}</td>
+                <td><span class="cat">${b.category}</span></td>
+                <td><span class="status status-${b.published ? 'published' : 'draft'}">${b.published ? 'Published' : 'Draft'}</span></td>
+                <td>${b.authorName || 'Unknown'}</td>
+                <td>${b.viewCount || 0}</td>
+                <td>${b.date}</td>
+                <td>
+                    <button class="action-btn view" onclick="viewBlog('${b.slug}')">View</button>
+                    ${canEdit(b) ? `<button class="action-btn edit" onclick="editBlog(${i})">Edit</button>` : ''}
+                    ${canDel(b) ? `<button class="action-btn del" onclick="delBlog(${b.id},'${b.title.replace(/'/g,"\\'")}')">Del</button>` : ''}
+                </td>
+            </tr>`;
+        }).join('');
+        document.getElementById('blogCount').textContent = blogs.length;
+    }
+
+    function viewBlog(slug) { window.open('../blog.html?slug=' + slug, '_blank'); }
+
+    function openBlogModal() {
+        if (!(me.permissions?.create) && me.role !== 'admin') { alert('No permission'); return; }
+        document.getElementById('blogModalTitle').textContent = 'Add Blog';
+        document.getElementById('blogId').value = '';
+        document.getElementById('blogTitle').value = '';
+        document.getElementById('blogSlug').value = '';
+        document.getElementById('blogSlug').dataset.manual = '';
+        document.getElementById('blogCategory').value = '';
+        document.getElementById('blogExcerpt').value = '';
+        quill.setContents([]);
+        document.getElementById('blogTags').value = '';
+        document.getElementById('blogPub').checked = true;
+        document.getElementById('blogFeat').checked = false;
+        document.getElementById('blogDate').valueAsDate = new Date();
+        document.getElementById('blogRead').value = 5;
+        clearImg();
+        document.getElementById('blogModal').classList.add('active');
+    }
+    function closeBlogModal() { document.getElementById('blogModal').classList.remove('active'); }
+
+    async function saveBlog() {
+        const id = document.getElementById('blogId').value;
+        const title = document.getElementById('blogTitle').value.trim();
+        const category = document.getElementById('blogCategory').value;
+        const excerpt = document.getElementById('blogExcerpt').value.trim();
+        const content = quill.root.innerHTML;
+        const slug = document.getElementById('blogSlug').value.trim() || makeSlug(title);
+        const published = document.getElementById('blogPub').checked;
+        const featured = document.getElementById('blogFeat').checked;
+        const readTime = document.getElementById('blogRead').value || 5;
+        const rawDate = document.getElementById('blogDate').value;
+        const tagsStr = document.getElementById('blogTags').value;
+        const imgUrl = document.getElementById('blogImgUrl').value.trim();
+
+        if (!title || !category || !excerpt || !content || content === '<p><br></p>') { alert('Fill required fields'); return; }
+
+        const img = imgData || imgUrl;
+        const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t);
+
+        const body = { title, category, excerpt, content, slug, published, featured, readTime, rawDate, tags, img };
+
+        try {
+            if (id) {
+                body.id = id;
+                await api('posts.php', { method: 'PUT', body: JSON.stringify(body) });
+            } else {
+                await api('posts.php', { method: 'POST', body: JSON.stringify(body) });
+            }
+            await renderBlogs();
+            closeBlogModal();
+            alert('Saved!');
+        } catch (e) { alert('Error: ' + e.message); }
+    }
+
+    function editBlog(i) {
+        const b = blogs[i];
+        if (!b || !canEdit(b)) { alert('No permission'); return; }
+        document.getElementById('blogModalTitle').textContent = 'Edit Blog';
+        document.getElementById('blogId').value = b.id;
+        document.getElementById('blogTitle').value = b.title;
+        document.getElementById('blogSlug').value = b.slug || '';
+        document.getElementById('blogSlug').dataset.manual = b.slug ? '1' : '';
+        document.getElementById('blogCategory').value = b.category;
+        document.getElementById('blogExcerpt').value = b.excerpt;
+        quill.root.innerHTML = b.content;
+        document.getElementById('blogTags').value = b.tags?.join(', ') || '';
+        document.getElementById('blogPub').checked = b.published;
+        document.getElementById('blogFeat').checked = b.featured;
+        document.getElementById('blogDate').value = b.rawDate || '';
+        document.getElementById('blogRead').value = parseInt(b.read) || 5;
+        if (b.img) {
+            imgData = null;
+            document.getElementById('blogImgUrl').value = b.img;
+            document.getElementById('previewImg').src = b.img;
+            document.getElementById('imgPreview').classList.add('show');
+            document.getElementById('uploadBox').style.display = 'none';
+        } else { clearImg(); }
+        document.getElementById('blogModal').classList.add('active');
+    }
+
+    async function delBlog(id, title) {
+        if (!confirm('Delete "' + title + '"?')) return;
+        try {
+            await api('posts.php?id=' + id, { method: 'DELETE' });
+            await renderBlogs();
+        } catch (e) { alert('Error: ' + e.message); }
+    }
+
+    // Users
+    async function renderUsers() {
+        try {
+            const data = await api('users.php');
+            users = data.users || [];
+        } catch (e) { users = []; }
+        const search = document.getElementById('userSearch').value.toLowerCase();
+        const role = document.getElementById('userRole2').value;
+        const filtered = users.filter(u => (u.username.toLowerCase().includes(search) || u.email.toLowerCase().includes(search)) && (role === 'all' || u.role === role));
+        const tbody = document.getElementById('userTable');
+        if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7"><div class="empty">No users</div></td></tr>'; document.getElementById('userCount').textContent = '0'; return; }
+        tbody.innerHTML = filtered.map(u => {
+            return `<tr>
+                <td><div class="user-cell"><div class="avatar">${(u.fullName||u.username).charAt(0).toUpperCase()}</div><div><strong>${u.fullName||u.username}</strong><br><small class="ga-link-desc">@${u.username}</small></div></div></td>
+                <td>${u.email}</td>
+                <td><span class="status status-${u.role}">${u.role}</span></td>
+                <td><span class="status status-${u.status}">${u.status}</span></td>
+                <td>${u.lastLogin ? new Date(u.lastLogin).toLocaleDateString() : 'Never'}</td>
+                <td>${u.postCount || 0}</td>
+                <td>
+                    <button class="action-btn edit" onclick="editUser(${u.id})">Edit</button>
+                    ${u.id !== me.id ? `<button class="action-btn del" onclick="delUser(${u.id},'${u.username}')">Del</button>` : ''}
+                </td>
+            </tr>`;
+        }).join('');
+        document.getElementById('userCount').textContent = users.length;
+    }
+
+    function openUserModal() {
+        document.getElementById('userModalTitle').textContent = 'Add User';
+        document.getElementById('userId').value = '';
+        document.getElementById('userUsername').value = '';
+        document.getElementById('userEmail').value = '';
+        document.getElementById('userFullname').value = '';
+        document.getElementById('userPassword').value = '';
+        document.getElementById('userRoleSelect').value = 'editor';
+        document.getElementById('userStatus').value = 'active';
+        document.getElementById('permCreate').checked = true;
+        document.getElementById('permEdit').checked = true;
+        document.getElementById('permEditAll').checked = false;
+        document.getElementById('permDelete').checked = false;
+        document.getElementById('permPublish').checked = true;
+        document.getElementById('permSubs').checked = false;
+        document.getElementById('userAlert').innerHTML = '';
+        document.getElementById('userModal').classList.add('active');
+    }
+    function closeUserModal() { document.getElementById('userModal').classList.remove('active'); }
+
+    async function saveUser() {
+        const id = document.getElementById('userId').value;
+        const username = document.getElementById('userUsername').value.trim().toLowerCase();
+        const email = document.getElementById('userEmail').value.trim().toLowerCase();
+        const fullName = document.getElementById('userFullname').value.trim();
+        const password = document.getElementById('userPassword').value;
+        const role = document.getElementById('userRoleSelect').value;
+        const status = document.getElementById('userStatus').value;
+        const alertEl = document.getElementById('userAlert');
+
+        if (!username || !email) { alertEl.innerHTML = '<div class="alert alert-error">Username and email required</div>'; return; }
+        if (!id && (!password || password.length < 8)) { alertEl.innerHTML = '<div class="alert alert-error">Password min 8 chars</div>'; return; }
+
+        const permissions = { create: document.getElementById('permCreate').checked, edit: document.getElementById('permEdit').checked, editAll: document.getElementById('permEditAll').checked, delete: document.getElementById('permDelete').checked, publish: document.getElementById('permPublish').checked, subscribers: document.getElementById('permSubs').checked };
+        const body = { username, email, fullName, password, role, status, permissions };
+
+        try {
+            if (id) {
+                body.id = id;
+                await api('users.php', { method: 'PUT', body: JSON.stringify(body) });
+            } else {
+                await api('users.php', { method: 'POST', body: JSON.stringify(body) });
+            }
+            await renderUsers();
+            closeUserModal();
+        } catch (e) { alertEl.innerHTML = '<div class="alert alert-error">' + e.message + '</div>'; }
+    }
+
+    function editUser(id) {
+        const u = users.find(x => x.id === id);
+        if (!u) return;
+        document.getElementById('userModalTitle').textContent = 'Edit User';
+        document.getElementById('userId').value = u.id;
+        document.getElementById('userUsername').value = u.username;
+        document.getElementById('userEmail').value = u.email;
+        document.getElementById('userFullname').value = u.fullName || '';
+        document.getElementById('userPassword').value = '';
+        document.getElementById('userRoleSelect').value = u.role;
+        document.getElementById('userStatus').value = u.status;
+        document.getElementById('permCreate').checked = u.permissions?.create ?? true;
+        document.getElementById('permEdit').checked = u.permissions?.edit ?? true;
+        document.getElementById('permEditAll').checked = u.permissions?.editAll ?? false;
+        document.getElementById('permDelete').checked = u.permissions?.delete ?? false;
+        document.getElementById('permPublish').checked = u.permissions?.publish ?? true;
+        document.getElementById('permSubs').checked = u.permissions?.subscribers ?? false;
+        document.getElementById('userAlert').innerHTML = '';
+        document.getElementById('userModal').classList.add('active');
+    }
+
+    async function delUser(id, username) {
+        if (!confirm('Delete ' + username + '?')) return;
+        try {
+            await api('users.php?id=' + id, { method: 'DELETE' });
+            await renderUsers();
+        } catch (e) { alert('Error: ' + e.message); }
+    }
+
+    // Stats
+    async function renderStats() {
+        try {
+            const data = await api('stats.php');
+            document.getElementById('statViews').textContent = data.views;
+            document.getElementById('statPub').textContent = data.published;
+            document.getElementById('statDraft').textContent = data.drafts;
+            document.getElementById('statSubs').textContent = data.subscribers;
+            document.getElementById('statUsers').textContent = data.users;
+            const recent = data.recentActivity || [];
+            document.getElementById('recentAct').innerHTML = recent.length ? recent.map(a => renderAct(a)).join('') : '<div class="empty">No activity</div>';
+        } catch (e) {}
+    }
+
+    function renderAct(a) {
+        const icons = {create:'➕',edit:'✏️',delete:'🗑️',login:'🔐',logout:'🚪','password-reset':'🔑'};
+        const cls = a.action === 'create' ? 'add' : a.action.includes('edit') ? 'edit' : a.action === 'delete' ? 'del' : 'login';
+        return `<div class="activity"><div class="activity-icon ${cls}">${icons[a.action]||'📋'}</div><div><div class="activity-text"><strong>${a.username}</strong> ${a.details}</div><div class="activity-time">${new Date(a.timestamp).toLocaleString()}</div></div></div>`;
+    }
+
+    // Logs
+    async function renderLogs() {
+        const filter = document.getElementById('logFilter').value;
+        try {
+            const data = await api('activity.php?type=' + filter);
+            logs = data.logs || [];
+        } catch (e) { logs = []; }
+        document.getElementById('logList').innerHTML = logs.length ? logs.slice(0, 100).map(a => renderAct(a)).join('') : '<div class="empty">No activity</div>';
+    }
+    function exportLogs() {
+        if (!logs.length) { alert('No data'); return; }
+        download('Timestamp,User,Type,Action,Details\n' + logs.map(a => `"${a.timestamp}","${a.username}","${a.type}","${a.action}","${a.details}"`).join('\n'), 'activity.csv');
+    }
+
+    // Subscribers
+    async function renderSubs() {
+        try {
+            const data = await api('subscribers.php');
+            subs = data.subscribers || [];
+        } catch (e) { subs = []; }
+        const tbody = document.getElementById('subTable');
+        if (!subs.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="empty">No subscribers</div></td></tr>'; document.getElementById('subCount').textContent = '0'; return; }
+        tbody.innerHTML = subs.map(s => `<tr><td>${s.name || '-'}</td><td>${s.email}</td><td>${s.date}</td><td><button class="action-btn del" onclick="delSub(${s.id})">Del</button></td></tr>`).join('');
+        document.getElementById('subCount').textContent = subs.length;
+    }
+    async function delSub(id) {
+        if (!(me.permissions?.subscribers) && me.role !== 'admin') { alert('No permission'); return; }
+        if (!confirm('Remove?')) return;
+        try {
+            await api('subscribers.php?id=' + id, { method: 'DELETE' });
+            await renderSubs();
+        } catch (e) { alert('Error: ' + e.message); }
+    }
+    function exportSubs() {
+        if (!subs.length) { alert('No data'); return; }
+        download('Name,Email,Date\n' + subs.map(s => `${s.name || ''},${s.email},${s.date}`).join('\n'), 'subscribers.csv');
+    }
+    function download(content, filename) {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([content], {type:'text/csv'}));
+        a.download = filename;
+        a.click();
+    }
+
+    // Password
+    function openPwModal() { document.getElementById('pwModal').classList.add('active'); }
+    function closePwModal() { document.getElementById('pwModal').classList.remove('active'); document.getElementById('pwAlert').innerHTML = ''; }
+    async function savePw() {
+        const cur = document.getElementById('pwCurrent').value;
+        const newPw = document.getElementById('pwNew').value;
+        const conf = document.getElementById('pwConfirm').value;
+        const alertEl = document.getElementById('pwAlert');
+        if (newPw.length < 8) { alertEl.innerHTML = '<div class="alert alert-error">Min 8 chars</div>'; return; }
+        if (newPw !== conf) { alertEl.innerHTML = '<div class="alert alert-error">No match</div>'; return; }
+        try {
+            await api('auth.php?action=change-password', { method: 'POST', body: JSON.stringify({ current: cur, newPassword: newPw }) });
+            alertEl.innerHTML = '<div class="alert alert-success">Saved!</div>';
+            setTimeout(closePwModal, 1500);
+        } catch (e) { alertEl.innerHTML = '<div class="alert alert-error">' + e.message + '</div>'; }
+    }
+
+    async function doLogout() {
+        try { await api('auth.php?action=logout'); } catch(e) {}
+    }
+
+    // Mobile sidebar toggle
+    function toggleAdminSidebar() {
+        var sidebar = document.getElementById('adminSidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('open');
+    }
+
+    // Close sidebar when clicking a link on mobile
+    document.querySelectorAll('.sidebar-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                toggleAdminSidebar();
+            }
+        });
+    });
+
+    // Google Analytics embed
+    function saveLookerEmbed() {
+        var url = document.getElementById('lookerEmbedUrl').value.trim();
+        if (!url) return;
+        localStorage.setItem('etLookerUrl', url);
+        loadLookerEmbed();
+    }
+    function loadLookerEmbed() {
+        var url = localStorage.getItem('etLookerUrl');
+        if (url) {
+            document.getElementById('gaEmbed').innerHTML = '<iframe src="'+url+'" width="100%" height="450" frameborder="0" class="iframe-embed"></iframe>';
+            document.getElementById('lookerEmbedUrl').value = url;
+        }
+    }
+    loadLookerEmbed();
+    </script>
+</body>
+</html>

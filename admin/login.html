@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8KP47FH1L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M8KP47FH1L');
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Energy Talks Middle East</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-dark: #0d1117; --primary-accent: #f7931e; --secondary-accent: #00a8e8; --tertiary-accent: #10b981; --text-light: #fff; --text-muted: #8b949e; --surface-dark: #161b22; --surface-card: #21262d; --gradient-energy: linear-gradient(135deg, #f7931e 0%, #ff6b35 50%, #00a8e8 100%); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--primary-dark); color: var(--text-light); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .login-container { width: 100%; max-width: 420px; }
+        .login-header { text-align: center; margin-bottom: 2rem; }
+        .logo { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .logo-icon { width: 60px; height: 60px; background: var(--gradient-energy); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.8rem; color: var(--primary-dark); }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; text-align: left; }
+        .logo-text span { display: block; font-size: 0.9rem; background: var(--gradient-energy); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+        .login-card { background: var(--surface-card); border-radius: 16px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.05); }
+        .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .login-subtitle { color: var(--text-muted); margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+        .form-input { width: 100%; padding: 1rem 1.25rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; background: var(--surface-dark); color: var(--text-light); font-family: 'Inter', sans-serif; font-size: 1rem; transition: border-color 0.3s; }
+        .form-input:focus { outline: none; border-color: var(--primary-accent); }
+        .form-input::placeholder { color: var(--text-muted); }
+        .form-checkbox { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.9rem; }
+        .form-checkbox input { width: 18px; height: 18px; accent-color: var(--primary-accent); }
+        .btn { width: 100%; padding: 1rem; border: none; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s; font-family: 'Inter', sans-serif; }
+        .btn-primary { background: var(--gradient-energy); color: var(--primary-dark); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(247, 147, 30, 0.4); }
+        .btn-secondary { background: var(--surface-dark); color: var(--text-light); border: 1px solid rgba(255,255,255,0.1); margin-top: 1rem; }
+        .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .alert-error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .alert-warning { background: rgba(247, 147, 30, 0.1); color: var(--primary-accent); border: 1px solid rgba(247, 147, 30, 0.3); }
+        .alert-success { background: rgba(16, 185, 129, 0.1); color: var(--tertiary-accent); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .back-link { display: block; text-align: center; margin-top: 1.5rem; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: var(--primary-accent); }
+        .form-footer { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .forgot-link { color: var(--primary-accent); text-decoration: none; font-size: 0.9rem; }
+        .forgot-link:hover { text-decoration: underline; }
+        .view-toggle { display: none; }
+        .view-toggle.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">
+                <div class="logo-icon">ET</div>
+                <div class="logo-text">Energy Talks<span>Middle East</span></div>
+            </div>
+        </div>
+        
+        <!-- Login Form -->
+        <div class="login-card view-toggle active" id="login-view">
+            <h1 class="login-title">Admin Login</h1>
+            <p class="login-subtitle">Sign in to manage your content</p>
+            <div id="login-alert"></div>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="login-username">Username or Email</label>
+                    <input type="text" class="form-input" id="login-username" placeholder="Enter your username or email" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="login-password">Password</label>
+                    <input type="password" class="form-input" id="login-password" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <div class="form-footer">
+                    <label class="form-checkbox">
+                        <input type="checkbox" id="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link" onclick="showResetView(); return false;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            <a href="../index.html" class="back-link">← Back to Website</a>
+        </div>
+        
+        <!-- Password Reset Form -->
+        <div class="login-card view-toggle" id="reset-view">
+            <h1 class="login-title">Reset Password</h1>
+            <p class="login-subtitle">Enter your username and email to reset password</p>
+            <div id="reset-alert"></div>
+            <form id="reset-form" onsubmit="handleReset(event)">
+                <div class="form-group">
+                    <label class="form-label" for="reset-username">Username</label>
+                    <input type="text" class="form-input" id="reset-username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reset-email">Email</label>
+                    <input type="email" class="form-input" id="reset-email" placeholder="Enter your registered email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reset-new-password">New Password</label>
+                    <input type="password" class="form-input" id="reset-new-password" placeholder="Min 8 characters" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reset-confirm-password">Confirm New Password</label>
+                    <input type="password" class="form-input" id="reset-confirm-password" placeholder="Confirm new password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Reset Password</button>
+                <button type="button" class="btn btn-secondary" onclick="showLoginView()">← Back to Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in via server session
+        (function() {
+            fetch('../api/auth.php?action=me', { credentials: 'same-origin' })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.success && data.user) {
+                        window.location.href = 'dashboard.html';
+                    }
+                })
+                .catch(function() {
+                    // Not logged in, stay on login page
+                });
+        })();
+
+        function showAlert(containerId, message, type = 'error') {
+            document.getElementById(containerId).innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+        }
+
+        function showLoginView() {
+            document.getElementById('login-view').classList.add('active');
+            document.getElementById('reset-view').classList.remove('active');
+            document.getElementById('login-alert').innerHTML = '';
+        }
+
+        function showResetView() {
+            document.getElementById('login-view').classList.remove('active');
+            document.getElementById('reset-view').classList.add('active');
+            document.getElementById('reset-alert').innerHTML = '';
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+
+            var username = document.getElementById('login-username').value.trim();
+            var password = document.getElementById('login-password').value;
+            var remember = document.getElementById('remember').checked;
+
+            // Disable the submit button while request is in flight
+            var submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing In...';
+
+            fetch('../api/auth.php?action=login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ username: username, password: password, remember: remember })
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    showAlert('login-alert', data.error || 'Login failed. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Sign In';
+                }
+            })
+            .catch(function() {
+                showAlert('login-alert', 'Network error. Please check your connection and try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign In';
+            });
+        }
+
+        function handleReset(e) {
+            e.preventDefault();
+
+            var username = document.getElementById('reset-username').value.trim();
+            var email = document.getElementById('reset-email').value.trim();
+            var newPassword = document.getElementById('reset-new-password').value;
+            var confirmPassword = document.getElementById('reset-confirm-password').value;
+
+            if (newPassword.length < 8) {
+                showAlert('reset-alert', 'Password must be at least 8 characters.');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showAlert('reset-alert', 'Passwords do not match.');
+                return;
+            }
+
+            // Disable the submit button while request is in flight
+            var submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Resetting...';
+
+            fetch('../api/auth.php?action=reset-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({ username: username, email: email, newPassword: newPassword })
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    showAlert('reset-alert', 'Password reset successfully! You can now login with your new password.', 'success');
+                    document.getElementById('reset-form').reset();
+                    setTimeout(showLoginView, 2000);
+                } else {
+                    showAlert('reset-alert', data.error || 'Password reset failed. Please try again.');
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Reset Password';
+            })
+            .catch(function() {
+                showAlert('reset-alert', 'Network error. Please check your connection and try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Reset Password';
+            });
+        }
+    </script>
+</body>
+</html>

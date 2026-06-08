@@ -1,0 +1,55 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="1200" height="630" fill="#0d1117"/>
+
+    <!-- Gradient Definitions -->
+    <defs>
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1f2e;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#0d1117;stop-opacity:1" />
+        </linearGradient>
+
+        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f7931e;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#ff6b35;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#00a8e8;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+    <!-- Decorative Elements -->
+    <circle cx="100" cy="100" r="150" fill="#f7931e" opacity="0.05"/>
+    <circle cx="1100" cy="530" r="180" fill="#00a8e8" opacity="0.05"/>
+
+    <!-- Logo - Rounded Square (120px with rounded corners) -->
+    <rect x="160" y="255" width="120" height="120" rx="30" ry="30" fill="url(#logoGradient)"/>
+
+    <!-- ET Text in Logo (Black) -->
+    <text x="220" y="345" font-family="Arial, sans-serif" font-size="70" font-weight="900" fill="#000000" text-anchor="middle" letter-spacing="-5">ET</text>
+
+    <!-- Main Title -->
+    <text x="330" y="240" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white">
+        Energy Talks Middle East
+    </text>
+
+    <!-- Subtitle with Orange Color -->
+    <text x="330" y="300" font-family="Arial, sans-serif" font-size="34" font-weight="600" fill="#f7931e">
+        DAS &amp; Partners Engineering Consultancy
+    </text>
+
+    <!-- Description -->
+    <text x="330" y="360" font-family="Arial, sans-serif" font-size="26" fill="#8b949e">
+        Top Engineering Firm in UAE
+    </text>
+
+    <!-- Location -->
+    <text x="330" y="405" font-family="Arial, sans-serif" font-size="26" fill="#8b949e">
+        Dubai • Sharjah • Abu Dhabi
+    </text>
+
+    <!-- Bottom Tagline -->
+    <text x="330" y="500" font-family="Arial, sans-serif" font-size="22" fill="#6b7280">
+        Expert insights on Oil &amp; Gas, Power, Renewables, and Energy markets
+    </text>
+</svg>
