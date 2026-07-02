@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"c:/Users/gowth/OneDrive/Desktop/DAS/Projects/9 Domains/Websites/MiddleEastStructural-AllFootersFixed\" && sed -i \\\\ *)"
+    ]
+  }
+}
