@@ -156,6 +156,85 @@
 
 
     <script>
+        // Hand-built static articles in /blog/*.html. These are NOT in the database,
+        // so they must be listed here or they end up orphaned (no internal links,
+        // which badly hurts how Google crawls and ranks them).
+        // Each has a `url` so it links to the static page, not the ?slug= reader.
+        const STATIC_ARTICLES = [
+            {
+                slug: 'das-international-consulting-group-usa-launch-2026',
+                url: '/blog/das-international-consulting-group-usa-launch-2026',
+                title: 'DAS & Partners Expands to the USA: DAS International Consulting Group LLC Launches',
+                excerpt: "The UAE's #1-ranked engineering consultancy goes global — DAS International Consulting Group LLC launches in Cheyenne, Wyoming, bringing UAE engineering and energy expertise to the US market.",
+                category: 'Industry News',
+                date: 'Jul 28, 2026',
+                rawDate: '2026-07-28',
+                read: '5 min',
+                featured: true
+            },
+            {
+                slug: 'uae-engineering-consultancy-rankings-july-2026',
+                url: '/blog/uae-engineering-consultancy-rankings-july-2026',
+                title: 'Top Engineering Consultancies in UAE — July 2026 Rankings',
+                excerpt: 'The July 2026 ranking of the best engineering consultancies in the UAE. DAS & Partners leads on multi-disciplinary delivery, authority approvals and sustainable design.',
+                category: 'Engineering Rankings',
+                date: 'Jul 2, 2026',
+                rawDate: '2026-07-02',
+                read: '8 min',
+                featured: true
+            },
+            {
+                slug: 'uae-engineering-consultancy-rankings-june-2026',
+                url: '/blog/uae-engineering-consultancy-rankings-june-2026',
+                title: 'Top Engineering Consultancies in UAE — June 2026 Rankings',
+                excerpt: 'The June 2026 ranking of the best engineering consultancies in the UAE. DAS & Partners leads on multi-disciplinary delivery, authority approvals and sustainable design.',
+                category: 'Engineering Rankings',
+                date: 'Jun 6, 2026',
+                rawDate: '2026-06-06',
+                read: '8 min'
+            },
+            {
+                slug: 'uae-authority-approvals-noc-permitting-guide-2026',
+                url: '/blog/uae-authority-approvals-noc-permitting-guide-2026',
+                title: 'UAE Authority Approvals & NOC Permitting: 2026 Guide',
+                excerpt: 'How authority approvals and NOC permitting work across Dubai, Abu Dhabi and Sharjah in 2026 — and how DAS & Partners secures faster permits with compliant, coordinated designs.',
+                category: 'Authority Approvals',
+                date: 'Jun 2, 2026',
+                rawDate: '2026-06-02',
+                read: '9 min'
+            },
+            {
+                slug: 'energy-engineering-consultancy-sharjah-2026',
+                url: '/blog/energy-engineering-consultancy-sharjah-2026',
+                title: 'Energy Engineering Consultancy in Sharjah 2026 | MEP & Power',
+                excerpt: 'Find the best energy engineering consultancy in Sharjah for 2026. DAS & Partners provides MEP design, SEWA approvals, and power systems from their City Gate Tower office.',
+                category: 'Energy Engineering',
+                date: 'Apr 5, 2026',
+                rawDate: '2026-04-05',
+                read: '7 min'
+            },
+            {
+                slug: 'top-mep-engineering-firms-abu-dhabi-2026',
+                url: '/blog/top-mep-engineering-firms-abu-dhabi-2026',
+                title: 'Top MEP Engineering Firms in Abu Dhabi 2026',
+                excerpt: 'Explore the top MEP engineering firms in Abu Dhabi for 2026. DAS & Partners leads with petrochemical expertise and Masdar City renewable energy projects.',
+                category: 'Energy Engineering',
+                date: 'Apr 3, 2026',
+                rawDate: '2026-04-03',
+                read: '7 min'
+            },
+            {
+                slug: 'best-energy-engineering-consultancy-dubai-2026',
+                url: '/blog/best-energy-engineering-consultancy-dubai-2026',
+                title: 'Best Energy Engineering Consultancy in Dubai 2026',
+                excerpt: 'Discover the best energy engineering consultancy in Dubai for 2026. DAS & Partners leads as the top MEP engineering firm offering HVAC, electrical, oil & gas, and renewable energy services.',
+                category: 'Energy Engineering',
+                date: 'Apr 1, 2026',
+                rawDate: '2026-04-01',
+                read: '7 min'
+            }
+        ];
+
         function getBlogs() {
             return fetch('api/posts.php')
                 .then(r => r.json())
@@ -211,14 +290,16 @@
             grid.innerHTML = list.map(b => {
                 const img = b.img || 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&q=80';
                 const slug = b.slug || generateSlug(b.title);
-                return `<a href="/blog?slug=${slug}" class="blog-card" data-blog-id="${b.id}">
+                // Static articles carry their own `url`; database posts use the ?slug= reader.
+                const href = b.url || `/blog?slug=${slug}`;
+                return `<a href="${href}" class="blog-card" data-blog-id="${b.id || slug}">
                     <div class="blog-img">
                         <img src="${img}" alt="${b.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&q=80'">
                         <span class="blog-category">${b.category}</span>
                         ${b.featured ? '<span class="featured-badge">⭐ Featured</span>' : ''}
                     </div>
                     <div class="blog-content">
-                        <div class="blog-meta">${b.date} • ${b.read} read • <span class="blog-views">${b.viewCount || 0} views</span></div>
+                        <div class="blog-meta">${b.date} • ${b.read} read${b.viewCount ? ` • <span class="blog-views">${b.viewCount} views</span>` : ''}</div>
                         <h3>${b.title}</h3>
                         <p>${b.excerpt}</p>
                         <span class="blog-link">Read More →</span>
@@ -228,7 +309,21 @@
         }
 
         async function init() {
-            blogs = await getBlogs();
+            const dbPosts = await getBlogs();
+
+            // Where a database post has the same slug as a static article, keep the
+            // static one only - it has far richer SEO markup. Nothing is deleted from
+            // the database; the duplicate simply isn't listed twice.
+            const staticSlugs = new Set(STATIC_ARTICLES.map(a => a.slug));
+            const uniqueDbPosts = dbPosts.filter(p => !staticSlugs.has(p.slug || generateSlug(p.title)));
+
+            // Newest first across both sources.
+            blogs = [...STATIC_ARTICLES, ...uniqueDbPosts].sort((a, b) => {
+                const da = new Date(a.rawDate || a.date || 0);
+                const db = new Date(b.rawDate || b.date || 0);
+                return db - da;
+            });
+
             populateFilters();
             renderBlogs(blogs);
         }
@@ -285,18 +380,8 @@
                 <div class="office-list">
                     <div class="office-item">
                         <strong>🏢 Abu Dhabi Corporate Office</strong>
-                        <p>Office 1701, 17th Floor, Abdulla Darwish Building - C-1, Hamdan Bin Mohammed St - Junction - E15, Abu Dhabi, UAE</p>
-                        <a href="tel:+97128779490">📞 +971 2 877 9490</a>
-                    </div>
-                    <div class="office-item">
-                        <strong>🏢 Abu Dhabi Branch Office</strong>
-                        <p>Office 606, 6th Floor, Ferdous Tower, Sheikh Zayed Bin Sultan Street, Abu Dhabi, UAE</p>
-                        <a href="tel:+97124498957">📞 +971 2 449 8957</a>
-                    </div>
-                    <div class="office-item">
-                        <strong>🏢 Abu Dhabi Corporate Office</strong>
                         <p>Office 1304, 13th Floor, Addax Tower, Reem Island, Abu Dhabi, UAE</p>
-                        <a href="tel:+97124498957">📞 +971 2 449 8957</a>
+                        <a href="tel:+97125464741">📞 +971 2 546 4741</a>
                     </div>
                     <div class="office-item">
                         <strong>🏢 Dubai Corporate Office</strong>
@@ -307,6 +392,11 @@
                         <strong>🏢 Sharjah Corporate Office</strong>
                         <p>10th Floor, City Gate Tower, Al Ittihad Street, Sharjah, UAE</p>
                         <a href="tel:+97165610096">📞 +971 6 561 0096</a>
+                    </div>
+                    <div class="office-item">
+                        <strong>🏢 DAS International Consulting Group LLC — USA</strong>
+                        <p>1712 Pioneer Ave, Suite 101, Cheyenne, WY 82001, United States</p>
+                        <a href="https://www.dasinternationalconsulting.com" target="_blank" rel="noopener">dasinternationalconsulting.com</a>
                     </div>
                 </div>
                 <div class="footer-email">
@@ -419,7 +509,7 @@
             if (lowerMsg.includes('service') || lowerMsg.includes('coverage')) {
                 response = 'We provide comprehensive coverage of: <br>• Oil & Gas Industry<br>• Petrochemicals<br>• Power & Utilities<br>• Renewable Energy<br>• ESG & Sustainability<br><br>Visit our <a href="/blogs">Blogs</a> for the latest insights!';
             } else if (lowerMsg.includes('contact') || lowerMsg.includes('phone') || lowerMsg.includes('email')) {
-                response = '📞 <strong>Contact Us:</strong><br><br>Abu Dhabi: +971 2 877 9490<br>Dubai: +971 4 285 1590<br>Sharjah: +971 6 561 0096<br><br>✉️ info@energytalksmiddleeast.com';
+                response = '📞 <strong>Contact Us:</strong><br><br>Abu Dhabi: +971 2 546 4741<br>Dubai: +971 4 285 1590<br>Sharjah: +971 6 561 0096<br><br>✉️ info@energytalksmiddleeast.com';
             } else if (lowerMsg.includes('news') || lowerMsg.includes('blog') || lowerMsg.includes('article')) {
                 response = 'Check out our latest energy news and insights on our <a href="/blogs">Blogs page</a>. We cover Oil & Gas, Renewables, Power sector and more!';
             } else if (lowerMsg.includes('consultancy') || lowerMsg.includes('top 25')) {
@@ -427,7 +517,7 @@
             } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
                 response = 'Hello! 👋 Welcome to Energy Talks Middle East. How can I assist you today?';
             } else {
-                response = 'Thank you for your message! For detailed inquiries, please contact us at <a href="mailto:info@energytalksmiddleeast.com">info@energytalksmiddleeast.com</a> or call +971 2 877 9490.';
+                response = 'Thank you for your message! For detailed inquiries, please contact us at <a href="mailto:info@energytalksmiddleeast.com">info@energytalksmiddleeast.com</a> or call +971 2 546 4741.';
             }
             
             var div = document.createElement('div');

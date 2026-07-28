@@ -4,7 +4,11 @@
 # Default rule - Allow all crawlers
 User-agent: *
 Allow: /
+# Backend / non-content folders (these return 403 and should not be crawled)
 Disallow: /admin/
+Disallow: /db/
+Disallow: /api/
+Disallow: /uploads/
 
 # Sitemap location
 Sitemap: https://www.energytalksmiddleeast.com/sitemap.xml

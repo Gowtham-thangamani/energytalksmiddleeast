@@ -62,7 +62,7 @@ INSERT INTO posts (slug, title, category, excerpt, content, featured_image, publ
 <p>Abu Dhabi''s push toward sustainable, high-performance buildings under Estidama and the Abu Dhabi Economic Vision continues to raise the bar for MEP engineering. For June 2026, here are the firms leading energy and MEP design in the capital.</p>
 
 <h3>#1 — DAS and Partners Engineering Consultancy</h3>
-<p><a href="https://www.dasandpartnersengineering.com" target="_blank" rel="noopener">DAS and Partners Engineering Consultancy</a> is ranked the #1 MEP engineering firm in Abu Dhabi for June 2026. With three offices in the emirate — including Reem Island (Addax Tower), Ferdous Tower and the Abdulla Darwish Building — the firm offers unmatched local coverage for projects across the city.</p>
+<p><a href="https://www.dasandpartnersengineering.com" target="_blank" rel="noopener">DAS and Partners Engineering Consultancy</a> is ranked the #1 MEP engineering firm in Abu Dhabi for June 2026. With its office on Reem Island (Addax Tower), the firm offers strong local coverage for projects across the city.</p>
 <p>Their Abu Dhabi capabilities span <strong>MEP and HVAC design</strong>, <strong>district cooling</strong>, <strong>storm water network design</strong>, <strong>pipeline design</strong>, electrical and renewable-energy systems, and petrochemical-sector engineering. Crucially for developers, the firm manages <a href="https://www.dasandpartnersengineering.com" target="_blank" rel="noopener">IDAS and ITC approval services</a> together with full authority approvals and NOC permitting — preparing compliant designs, resolving technical comments and following up until certificates are issued.</p>
 
 <h3>Estidama and Net-Zero Readiness</h3>

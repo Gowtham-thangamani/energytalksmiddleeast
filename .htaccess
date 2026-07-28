@@ -1,11 +1,26 @@
 RewriteEngine On
 
+# Do NOT let Apache auto-append a trailing slash for directories.
+# Without this, /blog gets redirected to /blog/ (because a blog/ folder exists),
+# which then returns 403 Forbidden since that folder has no index file.
+DirectorySlash Off
+
+# /blog on its own has no content (blog.html is the JS article reader and needs
+# a ?slug= parameter). Send bare /blog and /blog/ to the real listing page.
+RewriteCond %{QUERY_STRING} ^$
+RewriteRule ^blog/?$ /blogs [R=301,L]
+
+# /blog?slug=... IS the article reader - serve blog.html for it.
+# (Also stops /blog resolving to the blog/ folder, which returned 403.)
+RewriteRule ^blog/?$ blog.html [L]
+
 # Remove .html extension from URLs
 RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
 RewriteRule ^ /%1 [NC,L,R=301]
 
-# Serve .html file when accessed without extension
-RewriteCond %{REQUEST_FILENAME} !-d
+# Serve .html file when accessed without extension.
+# NOTE: intentionally only checks !-f (not !-d) so this still works when a
+# directory shares the same name as an .html file (e.g. blog.html + blog/).
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]

@@ -1,237 +1,226 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Main pages -->
     <url>
         <loc>https://www.energytalksmiddleeast.com/</loc>
-        <lastmod>2026-07-02</lastmod>
-        <changefreq>monthly</changefreq>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/consultancy</loc>
-        <lastmod>2026-07-02</lastmod>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/das-partners</loc>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/about</loc>
-        <lastmod>2026-04-03</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blogs</loc>
-        <lastmod>2026-07-02</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/contact</loc>
-        <lastmod>2026-04-03</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
 
-    <!-- Static SEO Landing Pages (July 2026) -->
+    <!-- Static blog articles -->
     <url>
-        <loc>https://www.energytalksmiddleeast.com/blog/uae-engineering-consultancy-rankings-july-2026.html</loc>
-        <lastmod>2026-07-02</lastmod>
+        <loc>https://www.energytalksmiddleeast.com/blog/das-international-consulting-group-usa-launch-2026</loc>
+        <lastmod>2026-07-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog/uae-engineering-consultancy-rankings-july-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog/uae-engineering-consultancy-rankings-june-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog/best-energy-engineering-consultancy-dubai-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog/top-mep-engineering-firms-abu-dhabi-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog/energy-engineering-consultancy-sharjah-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog/uae-authority-approvals-noc-permitting-guide-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 
-    <!-- Blog Posts (July 2026) -->
+    <!-- Database-backed articles (served by blog.html via api/posts.php) -->
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=best-energy-engineering-consultancy-dubai-july-2026</loc>
-        <lastmod>2026-07-02</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=uae-engineering-consultancy-rankings-july-2026</loc>
-        <lastmod>2026-07-02</lastmod>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=best-energy-engineering-consultancy-dubai-june-2026</loc>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=top-mep-engineering-firms-abu-dhabi-july-2026</loc>
-        <lastmod>2026-07-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=best-energy-engineering-consultancy-sharjah-july-2026</loc>
-        <lastmod>2026-07-02</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=uae-authority-approvals-noc-permitting-guide-july-2026</loc>
-        <lastmod>2026-07-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Static SEO Landing Pages (June 2026) -->
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog/best-energy-engineering-consultancy-dubai-2026.html</loc>
-        <lastmod>2026-06-07</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog/uae-engineering-consultancy-rankings-june-2026.html</loc>
-        <lastmod>2026-06-06</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog/top-mep-engineering-firms-abu-dhabi-2026.html</loc>
-        <lastmod>2026-06-05</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog/energy-engineering-consultancy-sharjah-2026.html</loc>
-        <lastmod>2026-06-04</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog/uae-authority-approvals-noc-permitting-guide-2026.html</loc>
-        <lastmod>2026-06-02</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <!-- Blog Posts (June 2026) -->
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=best-energy-engineering-consultancy-dubai-june-2026</loc>
-        <lastmod>2026-06-07</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=uae-engineering-consultancy-rankings-june-2026</loc>
-        <lastmod>2026-06-06</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=top-mep-engineering-firms-abu-dhabi-june-2026</loc>
-        <lastmod>2026-06-05</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=best-energy-engineering-consultancy-sharjah-june-2026</loc>
-        <lastmod>2026-06-04</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=uae-authority-approvals-noc-permitting-guide-2026</loc>
-        <lastmod>2026-06-02</lastmod>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=top-mep-engineering-firms-abu-dhabi-july-2026</loc>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
     </url>
-
-    <!-- Blog Posts (March–April 2026) -->
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=top-mep-engineering-firms-abu-dhabi-june-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=uae-authority-approvals-noc-permitting-guide-july-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=best-engineering-firms-uae-april-2026</loc>
-        <lastmod>2026-04-01</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=abu-dhabi-green-building-regulations-2026</loc>
-        <lastmod>2026-03-28</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=dubai-infrastructure-boom-2026</loc>
-        <lastmod>2026-03-25</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=sharjah-sustainable-city-masterplan</loc>
-        <lastmod>2026-03-22</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=mep-engineering-trends-gcc-2026</loc>
-        <lastmod>2026-03-18</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://www.energytalksmiddleeast.com/blog?slug=structural-engineering-high-rise-uae</loc>
-        <lastmod>2026-03-15</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=authority-approvals-guide-uae-2026</loc>
-        <lastmod>2026-03-12</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=abu-dhabi-green-building-regulations-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=dubai-infrastructure-boom-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=sharjah-sustainable-city-masterplan</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=mep-engineering-trends-gcc-2026</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://www.energytalksmiddleeast.com/blog?slug=structural-engineering-high-rise-uae</loc>
+        <lastmod>2026-07-18</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=renewable-energy-uae-2026-targets</loc>
-        <lastmod>2026-03-08</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=bim-mandate-gcc-construction</loc>
-        <lastmod>2026-03-05</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=water-infrastructure-challenges-middle-east</loc>
-        <lastmod>2026-03-01</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
-
-    <!-- Existing blog posts -->
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=uae-adnoc-low-carbon-investments</loc>
-        <lastmod>2025-12-15</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=saudi-arabia-50b-solar-initiative</loc>
-        <lastmod>2025-12-12</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=oil-prices-stabilize-opec-decisions</loc>
-        <lastmod>2025-12-10</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=ai-transforming-middle-east-oil-fields</loc>
-        <lastmod>2025-12-08</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=green-hydrogen-hub-plans-expand</loc>
-        <lastmod>2025-12-05</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://www.energytalksmiddleeast.com/blog?slug=nocs-strengthen-esg-commitments</loc>
-        <lastmod>2025-12-03</lastmod>
+        <lastmod>2026-07-18</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.6</priority>
     </url>
+
 </urlset>
