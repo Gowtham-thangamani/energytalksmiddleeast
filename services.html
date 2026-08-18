@@ -404,5 +404,80 @@
         });
     </script>
 
+
+    <!-- Service detail modal -->
+    <style>
+        .coverage-card{cursor:pointer;}
+        .coverage-card .svc-more{display:block;margin-top:14px;color:#c9a84c;font-size:.85rem;font-weight:600;}
+        .svc-modal{position:fixed;inset:0;background:rgba(5,5,10,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;z-index:3000;padding:40px 16px;overflow-y:auto;}
+        .svc-modal.open{display:flex;}
+        .svc-box{background:#121218;border:1px solid rgba(201,168,76,.25);border-radius:16px;max-width:660px;width:100%;padding:36px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.55);}
+        .svc-close{position:absolute;top:12px;right:18px;background:none;border:none;color:#c9a84c;font-size:32px;line-height:1;cursor:pointer;}
+        .svc-lead{color:#c9a84c;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+        .svc-box h2{font-family:'Playfair Display',serif;color:#fff;font-size:1.8rem;margin:0 0 14px;}
+        .svc-box p{color:#cfcfcf;line-height:1.8;margin:0 0 16px;font-size:1rem;}
+        .svc-box h3{color:#e8c96a;font-size:1.05rem;margin:24px 0 12px;font-family:'Playfair Display',serif;}
+        .svc-includes{list-style:none;padding:0;margin:0;}
+        .svc-includes li{color:#ddd;padding:6px 0 6px 26px;position:relative;line-height:1.6;}
+        .svc-includes li::before{content:'\2713';position:absolute;left:0;color:#c9a84c;font-weight:700;}
+        .svc-steps{display:grid;gap:14px;margin:6px 0 4px;}
+        .svc-step{display:flex;gap:14px;align-items:flex-start;}
+        .svc-step .n{flex:none;width:34px;height:34px;border-radius:50%;background:#c9a84c;color:#0a0a0a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.95rem;}
+        .svc-step .t{color:#fff;font-weight:600;margin-bottom:2px;}
+        .svc-step .d{color:#bbb;font-size:.92rem;line-height:1.6;}
+        .svc-cta{display:inline-block;margin-top:24px;background:#c9a84c;color:#0a0a0a;padding:12px 26px;border-radius:8px;font-weight:700;text-decoration:none;transition:background .2s;}
+        .svc-cta:hover{background:#e8c96a;}
+    </style>
+    <div class="svc-modal" id="svcModal" onclick="if(event.target===this)svcClose()">
+        <div class="svc-box">
+            <button class="svc-close" onclick="svcClose()" aria-label="Close">&times;</button>
+            <div id="svcBody"></div>
+        </div>
+    </div>
+    <script>
+    (function(){
+        var DATA = {
+            "MEP Engineering": {intro:"A fully coordinated mechanical, electrical and plumbing design service that keeps every building-services discipline inside one accountable team, so systems are clash-free and buildable before they reach site.", inc:["Mechanical, electrical and plumbing (MEP) design to IFC stage","BIM coordination and clash detection across all disciplines","Chilled-water, ventilation, drainage and power systems","Coordination with structural and civil packages"]},
+            "HVAC & District Cooling": {intro:"Air-conditioning and cooling systems engineered for the Gulf climate, sized to cut both peak cooling load and long-term energy cost.", inc:["Cooling load calculations and thermal modelling","Chilled-water, VRF and packaged system design","District cooling plant and network connections","Duct and pipe sizing, plant-room layouts"]},
+            "Electrical Systems Design": {intro:"Complete electrical design from the incoming supply to the last fitting, coordinated with the local distribution authority.", inc:["LV and MV power distribution design","Lighting, small power and standby generation","Earthing, bonding and lightning protection","DEWA / ADDC / SEWA supply coordination"]},
+            "Renewable Energy & Solar": {intro:"Solar and clean-energy design that helps buildings and sites cut grid dependence in line with UAE Net Zero 2050 targets.", inc:["Rooftop and ground-mount solar PV design","Energy yield analysis and financial modelling","Battery storage and grid-tie integration","DEWA Shams / net-metering applications"]},
+            "Energy Modelling & Sustainability": {intro:"Whole-building energy analysis and green-building compliance, embedded into the design from the very first concept rather than bolted on later.", inc:["Whole-building energy modelling and simulation","Estidama Pearl, Al Sa'fat and LEED compliance","Retrofit and energy-audit studies","Passive design and envelope optimisation"]},
+            "Fire Protection & Life Safety": {intro:"Fire and life-safety engineering designed for first-time Civil Defence approval, protecting occupants and keeping projects on programme.", inc:["Fire-fighting and sprinkler system design","Fire-alarm and detection design","Smoke management and means of escape","NFPA and UAE Fire & Life Safety Code compliance"]},
+            "Infrastructure & Utilities": {intro:"The external works that connect a building to the world - drainage, pipelines and utilities - coordinated with the site and roadworks.", inc:["Storm water network and drainage design","Pipeline design for water, sewer and energy","Wet and dry utility coordination","Road, traffic-diversion and parking design"]},
+            "Authority Approvals & NOC": {intro:"End-to-end management of every authority submission and No Objection Certificate, so approvals never become the bottleneck.", inc:["Municipality, DDA and DEWA submissions","IDAS & ITC approvals in Abu Dhabi","Civil Defence and free-zone (Trakhees) NOCs","Technical-comment resolution until certificate issue"]}
+        };
+        var STEPS = [
+            {t:"Enquiry & Consultation", d:"We review your scope, drawings and site, then agree deliverables, programme and the authorities involved."},
+            {t:"Concept & Detailed Design", d:"Our engineers produce coordinated, code-compliant designs with BIM modelling and clash detection through to IFC."},
+            {t:"Authority Approvals & NOC", d:"We prepare and lodge compliant submissions, resolve reviewer comments and follow up until every NOC is issued."},
+            {t:"Delivery & Site Supervision", d:"We stay engaged through construction with site support, inspections and as-built close-out at handover."}
+        ];
+        function esc(s){return s;}
+        window.openService = function(key){
+            var d = DATA[key]; if(!d) return;
+            var h = '<div class="svc-lead">Our Services</div><h2>'+key+'</h2><p>'+d.intro+'</p>';
+            h += '<h3>What&rsquo;s included</h3><ul class="svc-includes">';
+            d.inc.forEach(function(i){h+='<li>'+i+'</li>';});
+            h += '</ul><h3>How We Proceed</h3><div class="svc-steps">';
+            STEPS.forEach(function(s,idx){h+='<div class="svc-step"><div class="n">'+(idx+1)+'</div><div><div class="t">'+s.t+'</div><div class="d">'+s.d+'</div></div></div>';});
+            h += '</div><a class="svc-cta" href="https://www.dasandpartnersengineering.com" target="_blank" rel="noopener">Discuss your project with DAS &amp; Partners</a>';
+            document.getElementById('svcBody').innerHTML = h;
+            var m = document.getElementById('svcModal'); m.classList.add('open'); document.body.style.overflow='hidden';
+        };
+        window.svcClose = function(){document.getElementById('svcModal').classList.remove('open'); document.body.style.overflow='';};
+        document.addEventListener('keydown', function(e){if(e.key==='Escape')svcClose();});
+        document.querySelectorAll('.coverage-card').forEach(function(card){
+            var h3 = card.querySelector('h3'); if(!h3) return;
+            var key = h3.textContent.trim();
+            if(!DATA[key]) return;
+            card.setAttribute('role','button'); card.setAttribute('tabindex','0');
+            var more = document.createElement('span'); more.className='svc-more'; more.textContent='View details & process →';
+            card.appendChild(more);
+            card.addEventListener('click', function(){openService(key);});
+            card.addEventListener('keydown', function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openService(key);}});
+        });
+    })();
+    </script>
+
 </body>
 </html>
