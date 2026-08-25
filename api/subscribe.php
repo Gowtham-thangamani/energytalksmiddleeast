@@ -1,6 +1,32 @@
 <?php
 require_once __DIR__ . '/config.php';
 
+/**
+ * Mirror this subscriber into the DAS central Subscribers list (best-effort).
+ */
+if (!function_exists('das_forward_subscriber')) {
+    function das_forward_subscriber($name, $email) {
+        $endpoint = 'https://www.dasandpartnersengineering.com/api/subscribers';
+        $payload  = json_encode(['name' => $name, 'email' => $email, 'source' => 'energytalks']);
+        try {
+            if (function_exists('curl_init')) {
+                $ch = curl_init($endpoint);
+                curl_setopt_array($ch, [
+                    CURLOPT_POST => true, CURLOPT_POSTFIELDS => $payload,
+                    CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+                    CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_POSTREDIR => 7, CURLOPT_TIMEOUT => 8, CURLOPT_CONNECTTIMEOUT => 5,
+                ]);
+                curl_exec($ch); curl_close($ch);
+            } else {
+                @file_get_contents($endpoint, false, stream_context_create([
+                    'http' => ['method' => 'POST', 'header' => "Content-Type: application/json\r\n", 'content' => $payload, 'timeout' => 8, 'ignore_errors' => true],
+                ]));
+            }
+        } catch (Throwable $e) { /* best-effort; ignore */ }
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonResponse(['error' => 'Method not allowed'], 405);
 }
@@ -35,5 +61,8 @@ try {
     $stmt = $db->prepare('INSERT INTO subscribers (email) VALUES (?)');
     $stmt->execute([$email]);
 }
+
+// Mirror to the DAS central Subscribers list (best-effort)
+das_forward_subscriber($name, $email);
 
 jsonResponse(['success' => true, 'message' => 'Successfully subscribed!'], 201);
